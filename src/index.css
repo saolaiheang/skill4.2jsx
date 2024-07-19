@@ -27,6 +27,18 @@ body {
   line-height: 1.5;
   color: #121212;
 }
+.container{
+  width: 100%;
+  height: auto;
+  
+}
+.mains{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  margin-top: 80px;
+}
 textarea,
 input,
 button {
@@ -69,6 +81,9 @@ button:active {
   border-right: solid 1px #e3e3e3;
   display: flex;
   flex-direction: column;
+  
+  
+
 }
 
 #sidebar > * {
@@ -101,6 +116,7 @@ button:active {
   flex: 1;
   overflow: auto;
   padding-top: 1rem;
+
 }
 
 #sidebar nav a span {
@@ -147,8 +163,8 @@ i {
 }
 
 #sidebar nav a.active {
-  background: hsl(224, 98%, 58%);
-  color: white;
+  background:#f5a777;
+  color: rgb(13, 13, 13);
 }
 
 #sidebar nav a.pending {
@@ -159,6 +175,7 @@ i {
   flex: 1;
   padding: 2rem 4rem;
   width: 100%;
+  
 }
 
 #detail.loading {

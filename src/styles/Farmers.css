@@ -1,0 +1,40 @@
+/* Farmers.css */
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #fcb6b6;
+    text-align: center;
+  
+    
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f3fbe1;
+  }
+  
+   tr:hover {
+    background-color: #ddd;
+  } 
+  
+  button {
+    background-color: #8ac5ee;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+   button:hover {
+    color: rgb(249, 13, 13);
+    /* background-color:  #fcb6b6; */
+  } 
+  
