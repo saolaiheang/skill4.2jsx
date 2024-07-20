@@ -18,29 +18,79 @@ function TableRow({ farmer, index }) {
   );
 }
 
-function selectProvince(e) {
-  let province_id = e.target.value;
-  endpoint = '/farmers?province_id=' + province_id;
-}
-
 function Farmers() {
   const [farmers, setFarmers] = useState([]);
-  const [selectedOption, setSelectedOption] = useState('all');
-  const options = ['all', 'one', 'two'];
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [filteredDistricts, setFilteredDistricts] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
 
-
-  const fetchFarmers = async (option) => {
-    try {
-      let endpoint = '';
-      if (option === 'all') {
-        endpoint = '/farmers';
-      } else if (option === 'one') {
-        endpoint = '/farmers?province_id=1';
-      } else if (option === 'two') {
-        endpoint = '/farmers?province_id=2';
+  useEffect(() => {
+    // Fetch provinces from API
+    const fetchProvinces = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/provinces`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch provinces");
+        }
+        const data = await response.json();
+        setProvinces(data);
+      } catch (error) {
+        console.error("Error fetching provinces:", error);
       }
-      const response = await fetch(`${API_BASE_URL}${endpoint}`);
+    };
+
+    // Fetch all districts from API
+    const fetchDistricts = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/districts`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch districts");
+        }
+        const data = await response.json();
+        setDistricts(data);
+      } catch (error) {
+        console.error('Error fetching districts:', error);
+      }
+    };
+
+    fetchProvinces();
+    fetchDistricts();
+  }, []); // Empty dependency array ensures useEffect runs only once
+
+  const handleProvinceChange = (event) => {
+    const selectedProvince = event.target.value;
+    setSelectedProvince(selectedProvince);
+    setSelectedDistrict(""); // Reset selected district when province changes
+
+    // Filter districts based on selected province
+    const filtered = districts.filter(district => district.province_id === provinces.find(province => province.name === selectedProvince)?.id);
+    setFilteredDistricts(filtered);
+    console.log("Filtered districts:", filtered);
+  };
+
+  const handleDistrictChange = (event) => {
+    const selectedDistrict = event.target.value;
+    setSelectedDistrict(selectedDistrict);
+    // Fetch farmers based on selected district
+    fetchFarmers(selectedDistrict);
+  };
+
+  const fetchFarmers = async (districtName = "") => {
+    try {
+      let url = `${API_BASE_URL}/farmers`;
+      // Append districtName as query parameter if provided
+      if (districtName) {
+        url += `?district_name=${encodeURIComponent(districtName)}`;
+      }
+      console.log("Fetching farmers from URL:", url); // Log the URL to verify it's correct
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Failed to fetch farmers");
+      }
       const data = await response.json();
+      console.log("Fetched farmers data:", data); // Log the fetched data to verify
       setFarmers(data);
     } catch (error) {
       console.error('Error fetching farmers data:', error);
@@ -48,22 +98,32 @@ function Farmers() {
   };
 
   useEffect(() => {
-    fetchFarmers(selectedOption);
-  }, [selectedOption]);
-
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
+    // Fetch initial farmers data when component mounts
+    fetchFarmers();
+  }, []);
   return (
     <>
       <div>
         <label>
-          Select an option:
-          <select value={selectedOption} onChange={handleChange}>
-            {options.map((option) => (
-              <option key={option} value={option}>
-                {option}
+          Select a province:
+          <select value={selectedProvince} onChange={handleProvinceChange}>
+            <option value="">Select a province</option>
+            {provinces.map((province) => (
+              <option key={province.name} value={province.name}>
+                {province.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>
+          Select a district:
+          <select value={selectedDistrict} onChange={handleDistrictChange} disabled={!selectedProvince}>
+            <option value="">Select a district</option>
+            {filteredDistricts.map((district) => (
+              <option key={district.id} value={district.name}>
+                {district.name}
               </option>
             ))}
           </select>
@@ -80,7 +140,7 @@ function Farmers() {
             <th>Gender</th>
             <th>Phone</th>
             <th>Source</th>
-            <th>Province</th>
+            <th>District</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -90,7 +150,6 @@ function Farmers() {
           ))}
         </tbody>
       </table>
-      
     </>
   );
 }

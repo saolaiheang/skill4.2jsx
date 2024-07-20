@@ -1,4 +1,4 @@
-import API_BASE_URL from "../config";
+
 import React, { useState, useEffect } from 'react';
 import { getProvince } from "../api/dropdown";
 
@@ -18,7 +18,7 @@ function Dropdownprovince(){
         fecthProvince();
     },[]);
     return(
-        <div className="drop_Downactive">
+        <div className="dropDownactive">
       <div className="select">
         <select>
           <option>All</option>
