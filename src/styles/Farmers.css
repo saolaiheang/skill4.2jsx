@@ -1,4 +1,19 @@
 /* Farmers.css */
+.dropdown{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+}
+select{
+  font-size: 18px;
+  text-align: center;
+  border-radius:5px;
+  background-color:  #b3e3f8;
+  margin-left: 50px;
+  width: fit-content;
+  height: 40px;
+}
 table {
     width: 100%;
     border-collapse: collapse;
@@ -11,14 +26,14 @@ table {
   }
   
   th {
-    background-color: #fcb6b6;
+    background-color: #b3e3f8;
     text-align: center;
   
     
   }
   
   tr:nth-child(even) {
-    background-color: #f3fbe1;
+    background-color: #e1f4fb;
   }
   
    tr:hover {

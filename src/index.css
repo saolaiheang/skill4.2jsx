@@ -121,7 +121,7 @@ button:active {
 
 #sidebar nav a span {
   float: right;
-  color: #eeb004;
+  color:  #b3e3f8;
 }
 #sidebar nav a.active span {
   color: inherit;
@@ -163,7 +163,7 @@ i {
 }
 
 #sidebar nav a.active {
-  background:#f5a777;
+  background: #04adf5;
   color: rgb(13, 13, 13);
 }
 

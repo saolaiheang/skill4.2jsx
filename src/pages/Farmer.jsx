@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import API_BASE_URL from '../config';
-import '../styles/Farmers.css';
+import React, { useState, useEffect } from "react";
+import API_BASE_URL from "../config";
+import "../styles/Farmers.css";
 
 function TableRow({ farmer, index }) {
   return (
@@ -13,7 +13,9 @@ function TableRow({ farmer, index }) {
       <td>{farmer.phone}</td>
       <td>{farmer.source}</td>
       <td>{farmer.district.name}</td>
-      <td><button>Edit</button></td>
+      <td>
+        <button>Edit</button>
+      </td>
     </tr>
   );
 }
@@ -51,7 +53,7 @@ function Farmers() {
         const data = await response.json();
         setDistricts(data);
       } catch (error) {
-        console.error('Error fetching districts:', error);
+        console.error("Error fetching districts:", error);
       }
     };
 
@@ -65,24 +67,29 @@ function Farmers() {
     setSelectedDistrict(""); // Reset selected district when province changes
 
     // Filter districts based on selected province
-    const filtered = districts.filter(district => district.province_id === provinces.find(province => province.name === selectedProvince)?.id);
+    const filtered = districts.filter(
+      (district) =>
+        district.province_id ===
+        provinces.find((province) => province.name === selectedProvince)?.id
+    );
     setFilteredDistricts(filtered);
     console.log("Filtered districts:", filtered);
   };
 
   const handleDistrictChange = (event) => {
     const selectedDistrict = event.target.value;
+    console.log(selectedDistrict);
     setSelectedDistrict(selectedDistrict);
     // Fetch farmers based on selected district
     fetchFarmers(selectedDistrict);
   };
 
-  const fetchFarmers = async (districtName = "") => {
+  const fetchFarmers = async (districtId = "") => {
     try {
       let url = `${API_BASE_URL}/farmers`;
-      // Append districtName as query parameter if provided
-      if (districtName) {
-        url += `?district_name=${encodeURIComponent(districtName)}`;
+      // Append districtId as query parameter if provided
+      if (districtId) {
+        url += `?district_id=${encodeURIComponent(districtId)}`;
       }
       console.log("Fetching farmers from URL:", url); // Log the URL to verify it's correct
       const response = await fetch(url);
@@ -93,7 +100,7 @@ function Farmers() {
       console.log("Fetched farmers data:", data); // Log the fetched data to verify
       setFarmers(data);
     } catch (error) {
-      console.error('Error fetching farmers data:', error);
+      console.error("Error fetching farmers data:", error);
     }
   };
 
@@ -103,9 +110,9 @@ function Farmers() {
   }, []);
   return (
     <>
-      <div>
+      <div className="dropdown">
         <label>
-          Select a province:
+          
           <select value={selectedProvince} onChange={handleProvinceChange}>
             <option value="">Select a province</option>
             {provinces.map((province) => (
@@ -115,14 +122,17 @@ function Farmers() {
             ))}
           </select>
         </label>
-      </div>
-      <div>
+      
         <label>
-          Select a district:
-          <select value={selectedDistrict} onChange={handleDistrictChange} disabled={!selectedProvince}>
+          
+          <select
+            value={selectedDistrict}
+            onChange={handleDistrictChange}
+            disabled={!selectedProvince}
+          >
             <option value="">Select a district</option>
             {filteredDistricts.map((district) => (
-              <option key={district.id} value={district.name}>
+              <option key={district.id} value={district.id}>
                 {district.name}
               </option>
             ))}
