@@ -39,11 +39,12 @@ function CropCycle() {
     <>
       <div className="dropdown">
         <label>
+          Select status:
           
           <select value={statusFilter} onChange={handleStatusChange}>
             <option value="">All</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
           </select>
         </label>
       </div>
@@ -70,7 +71,7 @@ function CropCycle() {
               <td>{cropcycle.close_date}</td>
               <td>{cropcycle.status}</td>
               <td>
-                <button>hello b lin</button>
+                <button>Edit</button>
               </td>
             </tr>
           ))}

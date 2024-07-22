@@ -71,7 +71,7 @@ function Farmland() {
               <td>{farmland.farmer_id}</td>
               <td>{farmland.status}</td>
               <td>
-                <button>hello b lin</button>
+                <button>Edit</button>
               </td>
             </tr>
           ))}
