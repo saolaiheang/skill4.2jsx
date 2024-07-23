@@ -4,10 +4,10 @@
 Clone or Fork the project
 - HTTPS
 ````
-
+git@github.com:saolaiheang/skill4.2jsx.git
 ````
 - SSH
-
+git@github.com:saolaiheang/skill4.2jsx.git
 ````
 Install dependencies:
 ````
